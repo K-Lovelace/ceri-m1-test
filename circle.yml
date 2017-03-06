@@ -1,0 +1,14 @@
+machine:
+  timezone:
+    Europe/Paris
+  java:
+    version: oraclejdk8
+
+general:
+  branches:
+    only:
+      - master
+
+test:
+  override:
+    - mvn test
