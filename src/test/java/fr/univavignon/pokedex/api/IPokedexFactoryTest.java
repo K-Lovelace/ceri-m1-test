@@ -1,6 +1,6 @@
 package fr.univavignon.pokedex.api;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import org.mockito.junit.MockitoRule;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public final class IPokedexFactoryTest extends TestCase {
+public final class IPokedexFactoryTest {
     
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -30,7 +30,7 @@ public final class IPokedexFactoryTest extends TestCase {
     private static IPokedex pokedex;
     
     @Before
-    public void setUp() throws PokedexException {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         IPokedex mockPokedex = mock(IPokedex.class);
         when(pokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory))
@@ -38,7 +38,7 @@ public final class IPokedexFactoryTest extends TestCase {
     }
     
     @Test
-    public void testGetPokemonMetadata() throws PokedexException {
-        assertEquals(pokedex.size(), pokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory).size());
+    public void testCreatePokedex() {
+        Assert.assertEquals(pokedex.size(), pokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory).size());
     }
 }

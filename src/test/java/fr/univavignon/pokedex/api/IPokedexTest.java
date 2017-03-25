@@ -1,9 +1,24 @@
 package fr.univavignon.pokedex.api;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
-/**
- * Created by lovelacez on 3/6/17.
- */
-public class IPokedexTest extends TestCase {
+
+public final class IPokedexTest {
+    
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    
+    
+    @Before
+    public void setUp() throws PokedexException {
+//        MockitoAnnotations.initMocks(this);
+    }
+    
+    @Test
+    public void test() {
+    }
 }

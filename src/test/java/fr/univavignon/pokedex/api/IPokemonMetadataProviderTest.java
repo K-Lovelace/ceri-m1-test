@@ -1,10 +1,7 @@
 package fr.univavignon.pokedex.api;
 
 import junit.framework.TestCase;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
@@ -12,7 +9,7 @@ import org.mockito.junit.MockitoRule;
 
 import static org.mockito.Mockito.when;
 
-public final class IPokemonMetadataProviderTest extends TestCase {
+public final class IPokemonMetadataProviderTest {
     
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -28,6 +25,6 @@ public final class IPokemonMetadataProviderTest extends TestCase {
     
     @Test
     public void testGetPokemonMetadata() throws PokedexException {
-        assertEquals("Bulbizarre", pokemonMetadataProvider.getPokemonMetadata(0).getName());
+        Assert.assertEquals("Bulbizarre", pokemonMetadataProvider.getPokemonMetadata(0).getName());
     }
 }
