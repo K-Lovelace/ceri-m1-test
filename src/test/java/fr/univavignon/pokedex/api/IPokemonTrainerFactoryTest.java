@@ -3,8 +3,15 @@ package fr.univavignon.pokedex.api;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public final class IPokemonTrainerFactoryTest {
@@ -12,13 +19,26 @@ public final class IPokemonTrainerFactoryTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     
+    @Mock
+    private static IPokemonTrainerFactory pokemonTrainerFactory;
+    
+    @Mock
+    private static IPokedexFactory pokedexFactory;
     
     @Before
     public void setUp() throws PokedexException {
-//        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.initMocks(this);
+        IPokedex mockPokedex = mock(IPokedex.class);
+        when(mockPokedex.size()).thenReturn(151);
+        when(pokemonTrainerFactory.createTrainer("Sacha", Team.VALOR, pokedexFactory))
+                .thenReturn(new PokemonTrainer("Sacha", Team.VALOR, mockPokedex));
     }
     
     @Test
-    public void test() {
+    public void testCreateTrainer() {
+        PokemonTrainer sacha = pokemonTrainerFactory.createTrainer("Sacha", Team.VALOR, pokedexFactory);
+        assertEquals("Sacha", sacha.getName());
+        assertEquals(Team.VALOR, sacha.getTeam());
+        assertEquals(151, sacha.getPokedex().size());
     }
 }
