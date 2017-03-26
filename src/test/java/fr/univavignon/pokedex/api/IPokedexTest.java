@@ -59,7 +59,7 @@ public final class IPokedexTest {
     @Before
     public void setUp() throws PokedexException {
         MockitoAnnotations.initMocks(this);
-        when(pokedex.size()).thenReturn(151);
+        when(pokedex.size()).thenReturn(151).thenReturn(2);
         when(pokedex.getPokemon(0)).thenReturn(bulbizarre);
         when(pokedex.getPokemon(200)).thenThrow(new PokedexException("Invalid index"));
         List<Pokemon> list1 = new ArrayList<>(), list2 = new ArrayList<>();
