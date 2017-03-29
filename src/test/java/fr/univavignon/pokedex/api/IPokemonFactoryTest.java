@@ -21,23 +21,22 @@ public class IPokemonFactoryTest {
     @Mock
     protected static IPokemonFactory pokemonFactory;
 
-    protected static Pokemon bulbizarre = new Pokemon(
-            0,
-            "Bulbizarre",
-            126,
-            126,
-            90,
-            613,
-            64,
-            4000,
-            4,
-            56
-    );
-
     @Before
     public void setUp() throws PokedexException {
         MockitoAnnotations.initMocks(this);
-        when(pokemonFactory.createPokemon(0, 613, 64, 4000, 4)).thenReturn(bulbizarre);
+        when(pokemonFactory.createPokemon(0, 613, 64, 4000, 4))
+                .thenReturn(new Pokemon(
+                0,
+                "Bulbizarre",
+                126,
+                126,
+                90,
+                613,
+                64,
+                4000,
+                4,
+                56
+        ));
     }
 
     @Test
