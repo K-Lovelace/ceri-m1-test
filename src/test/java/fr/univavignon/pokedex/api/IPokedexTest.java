@@ -5,8 +5,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +18,7 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 
@@ -25,9 +28,9 @@ public final class IPokedexTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     
     @Mock
-    private static IPokedex pokedex;
+    protected static IPokedex pokedex;
     
-    private static Pokemon bulbizarre = new Pokemon(
+    protected static Pokemon bulbizarre = new Pokemon(
             0,
             "Bulbizarre",
             126,
@@ -40,7 +43,7 @@ public final class IPokedexTest {
             56
     );
     
-    private static Pokemon aquali = new Pokemon(
+    protected static Pokemon aquali = new Pokemon(
             133,
             "Aquali",
             186,
@@ -52,38 +55,40 @@ public final class IPokedexTest {
             4,
             100
     );
-    
-    private static Comparator<Pokemon> comp1 = Comparator.comparing(PokemonMetadata::getName);
-    private static Comparator<Pokemon> comp2 = Comparator.comparing(PokemonMetadata::getAttack);
-    
+
+    private static final int[] pokedex_size = {0};
+
     @Before
     public void setUp() throws PokedexException {
         MockitoAnnotations.initMocks(this);
-        when(pokedex.size()).thenReturn(151);
+
+        when(pokedex.size()).thenAnswer(i -> pokedex_size[0]);
+        when(pokedex.addPokemon(any())).then(i -> pokedex_size[0]++);
+
         when(pokedex.getPokemon(0)).thenReturn(bulbizarre);
-        when(pokedex.getPokemon(200)).thenThrow(new PokedexException("Invalid index"));
+        when(pokedex.getPokemon(1)).thenThrow(new PokedexException("Invalid index"));
+
         List<Pokemon> list1 = new ArrayList<>(), list2 = new ArrayList<>();
         list1.add(bulbizarre);
         list1.add(aquali);
-        // get 151 pokemons in the list
-        for(int i = 2; i < 151; i++) {
-            list1.add(new Pokemon(-10, "MISSINGNO", 0, 0, 0, 0, 0, 0, 0, 0));
-        }
+
         when(pokedex.getPokemons()).thenReturn(Collections.unmodifiableList(list1));
         list2.add(aquali);
         list2.add(bulbizarre);
-        when(pokedex.getPokemons(comp1)).thenReturn(Collections.unmodifiableList(list2));
-        when(pokedex.getPokemons(comp2)).thenReturn(Collections.unmodifiableList(list1));
+        when(pokedex.getPokemons(any())).thenReturn(Collections.unmodifiableList(list2)).thenReturn(Collections.unmodifiableList(list1));
     }
-    
+
     @Test
     public void testSize() {
-        assertEquals(151, pokedex.size());
+        assertEquals(0, pokedex.size());
     }
     
     @Test
     public void testAddPokemon() {
         assertEquals(0, pokedex.addPokemon(bulbizarre));
+        assertEquals(1, pokedex.size());
+        assertEquals(1, pokedex.addPokemon(bulbizarre));
+        assertEquals(2, pokedex.size());
     }
     
     @Test
@@ -93,7 +98,7 @@ public final class IPokedexTest {
         assertEquals("Bulbizarre", pokedex.getPokemon(0).getName());
         
         try {
-            pokedex.getPokemon(200);
+            pokedex.getPokemon(1);
             fail("Expected a PokedexException to be thrown");
         } catch(PokedexException e) {
             assertEquals("Invalid index", e.getMessage());
@@ -102,6 +107,8 @@ public final class IPokedexTest {
     
     @Test
     public void testGetPokemons() throws PokedexException {
+        pokedex.addPokemon(bulbizarre);
+        pokedex.addPokemon(aquali);
         List<Pokemon> list = pokedex.getPokemons();
         
         assertEquals(pokedex.size(), list.size());
@@ -117,12 +124,13 @@ public final class IPokedexTest {
     
     @Test
     public void testGetPokemonsWithOrder() throws PokedexException {
-        List<Pokemon> listWithoutOrder = pokedex.getPokemons();
-        List<Pokemon> listOrderedWithName = pokedex.getPokemons(comp1);
-        List<Pokemon> listOrderedWithAttack = pokedex.getPokemons(comp2);
+        pokedex.addPokemon(bulbizarre);
+        pokedex.addPokemon(aquali);
+        List<Pokemon> listOrderedWithName = pokedex.getPokemons(PokemonComparators.NAME);
+        List<Pokemon> listOrderedWithIndex = pokedex.getPokemons(PokemonComparators.INDEX);
         
-        assertTrue(listWithoutOrder.indexOf(aquali) >= listOrderedWithName.indexOf(aquali));
-        assertTrue(listOrderedWithName.indexOf(aquali) <= listOrderedWithAttack.indexOf(aquali));
+        assertEquals(0, listOrderedWithName.indexOf(aquali));
+        assertEquals(1, listOrderedWithIndex.indexOf(aquali));
     }
     
     
