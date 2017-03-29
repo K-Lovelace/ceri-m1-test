@@ -1,6 +1,5 @@
 package fr.univavignon.pokedex.api;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,6 +8,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,10 +26,7 @@ public final class IPokedexFactoryTest {
     
     @Mock
     private static IPokemonFactory pokemonFactory;
-    
-    @Mock
-    private static IPokedex pokedex;
-    
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -39,6 +37,8 @@ public final class IPokedexFactoryTest {
     
     @Test
     public void testCreatePokedex() {
-        Assert.assertEquals(pokedex.size(), pokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory).size());
+        IPokedex newPokedex = pokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory);
+        //not null
+        assertNotNull(newPokedex);
     }
 }
