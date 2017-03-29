@@ -9,18 +9,19 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 
-public final class IPokemonFactoryTest {
-    
+public class IPokemonFactoryTest {
+
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-    
+
     @Mock
-    private static IPokemonFactory pokemonFactory;
-    
-    private static Pokemon bulbizarre = new Pokemon(
+    protected static IPokemonFactory pokemonFactory;
+
+    protected static Pokemon bulbizarre = new Pokemon(
             0,
             "Bulbizarre",
             126,
@@ -32,16 +33,17 @@ public final class IPokemonFactoryTest {
             4,
             56
     );
-    
+
     @Before
     public void setUp() throws PokedexException {
         MockitoAnnotations.initMocks(this);
-        when(pokemonFactory.createPokemon(0, 613,64, 4000, 4)).thenReturn(bulbizarre);
+        when(pokemonFactory.createPokemon(0, 613, 64, 4000, 4)).thenReturn(bulbizarre);
     }
-    
+
     @Test
     public void testCreatePokemon() {
-        Pokemon pokemon = pokemonFactory.createPokemon(0, 613,64, 4000, 4);
+        Pokemon pokemon = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
+        assertNotNull(pokemon);
         assertEquals("Bulbizarre", pokemon.getName());
     }
 }

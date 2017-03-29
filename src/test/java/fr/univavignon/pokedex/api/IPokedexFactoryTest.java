@@ -13,19 +13,19 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public final class IPokedexFactoryTest {
+public class IPokedexFactoryTest {
     
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     
     @Mock
-    private static IPokedexFactory pokedexFactory;
+    protected static IPokedexFactory pokedexFactory;
     
     @Mock
-    private static IPokemonMetadataProvider pokemonMetadataProvider;
+    protected static IPokemonMetadataProvider pokemonMetadataProvider;
     
     @Mock
-    private static IPokemonFactory pokemonFactory;
+    protected static IPokemonFactory pokemonFactory;
 
     @Before
     public void setUp() {
