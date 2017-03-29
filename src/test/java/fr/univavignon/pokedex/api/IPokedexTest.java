@@ -61,7 +61,7 @@ public class IPokedexTest {
     @Before
     public void setUp() throws PokedexException {
         MockitoAnnotations.initMocks(this);
-
+        pokedex_size[0] = 0;
         when(pokedex.size()).thenAnswer(i -> pokedex_size[0]);
         when(pokedex.addPokemon(any())).then(i -> pokedex_size[0]++);
 
