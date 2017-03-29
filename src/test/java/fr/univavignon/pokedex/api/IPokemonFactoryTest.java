@@ -26,17 +26,17 @@ public class IPokemonFactoryTest {
         MockitoAnnotations.initMocks(this);
         when(pokemonFactory.createPokemon(0, 613, 64, 4000, 4))
                 .thenReturn(new Pokemon(
-                0,
-                "Bulbizarre",
-                126,
-                126,
-                90,
-                613,
-                64,
-                4000,
-                4,
-                56
-        ));
+                        0,
+                        "Bulbizarre",
+                        126,
+                        126,
+                        90,
+                        613,
+                        64,
+                        4000,
+                        4,
+                        56
+                ));
     }
 
     @Test
@@ -44,5 +44,9 @@ public class IPokemonFactoryTest {
         Pokemon pokemon = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
         assertNotNull(pokemon);
         assertEquals("Bulbizarre", pokemon.getName());
+        assertEquals(126, pokemon.getAttack());
+        assertEquals(126, pokemon.getDefense());
+        assertEquals(90, pokemon.getStamina());
+        assertEquals(56, pokemon.getIv());
     }
 }

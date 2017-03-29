@@ -10,22 +10,21 @@ import org.mockito.junit.MockitoRule;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
 public final class IPokemonTrainerFactoryTest {
-    
+
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-    
+
     @Mock
     private static IPokemonTrainerFactory pokemonTrainerFactory;
-    
+
     @Mock
     private static IPokedexFactory pokedexFactory;
-    
+
     @Before
     public void setUp() throws PokedexException {
         MockitoAnnotations.initMocks(this);
@@ -34,7 +33,7 @@ public final class IPokemonTrainerFactoryTest {
         when(pokemonTrainerFactory.createTrainer("Sacha", Team.VALOR, pokedexFactory))
                 .thenReturn(new PokemonTrainer("Sacha", Team.VALOR, mockPokedex));
     }
-    
+
     @Test
     public void testCreateTrainer() {
         PokemonTrainer sacha = pokemonTrainerFactory.createTrainer("Sacha", Team.VALOR, pokedexFactory);

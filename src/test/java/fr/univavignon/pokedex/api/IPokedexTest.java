@@ -5,31 +5,27 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 
 public class IPokedexTest {
-    
+
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-    
+
     @Mock
     protected static IPokedex pokedex;
-    
+
     protected static Pokemon bulbizarre = new Pokemon(
             0,
             "Bulbizarre",
@@ -42,7 +38,7 @@ public class IPokedexTest {
             4,
             56
     );
-    
+
     protected static Pokemon aquali = new Pokemon(
             133,
             "Aquali",
@@ -68,7 +64,8 @@ public class IPokedexTest {
         when(pokedex.getPokemon(0)).thenReturn(bulbizarre);
         when(pokedex.getPokemon(1)).thenThrow(new PokedexException("Invalid index"));
 
-        List<Pokemon> list1 = new ArrayList<>(), list2 = new ArrayList<>();
+        List<Pokemon> list1 = new ArrayList<>();
+        List<Pokemon> list2 = new ArrayList<>();
         list1.add(bulbizarre);
         list1.add(aquali);
 
@@ -82,7 +79,7 @@ public class IPokedexTest {
     public void testSize() {
         assertEquals(0, pokedex.size());
     }
-    
+
     @Test
     public void testAddPokemon() {
         assertEquals(0, pokedex.addPokemon(bulbizarre));
@@ -90,48 +87,48 @@ public class IPokedexTest {
         assertEquals(1, pokedex.addPokemon(bulbizarre));
         assertEquals(2, pokedex.size());
     }
-    
+
     @Test
     public void testGetPokemon() throws PokedexException {
         pokedex.addPokemon(bulbizarre);
-        
+
         assertEquals("Bulbizarre", pokedex.getPokemon(0).getName());
-        
+
         try {
             pokedex.getPokemon(1);
             fail("Expected a PokedexException to be thrown");
-        } catch(PokedexException e) {
+        } catch (PokedexException e) {
             assertEquals("Invalid index", e.getMessage());
         }
     }
-    
+
     @Test
     public void testGetPokemons() throws PokedexException {
         pokedex.addPokemon(bulbizarre);
         pokedex.addPokemon(aquali);
         List<Pokemon> list = pokedex.getPokemons();
-        
+
         assertEquals(pokedex.size(), list.size());
         assertEquals(pokedex.getPokemon(0).getName(), list.get(0).getName());
-        
-        try{
+
+        try {
             list.add(bulbizarre);
             fail("Expected UnsupportedOperationException to be thrown");
         } catch (UnsupportedOperationException e) {
-            assertTrue(true);
+            e.printStackTrace();
         }
     }
-    
+
     @Test
     public void testGetPokemonsWithOrder() throws PokedexException {
         pokedex.addPokemon(bulbizarre);
         pokedex.addPokemon(aquali);
         List<Pokemon> listOrderedWithName = pokedex.getPokemons(PokemonComparators.NAME);
         List<Pokemon> listOrderedWithIndex = pokedex.getPokemons(PokemonComparators.INDEX);
-        
+
         assertEquals(0, listOrderedWithName.indexOf(aquali));
         assertEquals(1, listOrderedWithIndex.indexOf(aquali));
     }
-    
-    
+
+
 }
