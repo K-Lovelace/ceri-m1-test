@@ -30,15 +30,27 @@ public class IPokemonMetadataProviderTest {
                         118,
                         118,
                         90));
+        when(pokemonMetadataProvider.getPokemonMetadata(200))
+                .thenThrow(new PokedexException("No pokemon at this index"));
     }
 
     @Test
-    public void testGetPokemonMetadata() throws PokedexException {
-        PokemonMetadata metadata = pokemonMetadataProvider.getPokemonMetadata(0);
+    public void testGetPokemonMetadata() {
+        PokemonMetadata metadata = null;
+        try {
+            metadata = pokemonMetadataProvider.getPokemonMetadata(0);
+        } catch (PokedexException e) {
+            e.printStackTrace();
+        }
         assertNotNull(metadata);
         assertEquals("Bulbasaur", metadata.getName());
         assertEquals(118, metadata.getAttack());
         assertEquals(118, metadata.getDefense());
         assertEquals(90, metadata.getStamina());
+    }
+
+    @Test(expected = PokedexException.class)
+    public void testGetPokemonMetadataError() throws PokedexException {
+        pokemonMetadataProvider.getPokemonMetadata(200);
     }
 }
