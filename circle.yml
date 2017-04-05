@@ -11,4 +11,5 @@ general:
 
 test:
   override:
-    - mvn verify
+    - mvn test
+    - mvn jacoco:report
