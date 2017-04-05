@@ -14,5 +14,5 @@ test:
     - mvn test
   post:
     - mvn jacoco:report
-    - mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=jacoco.xml -DprojectToken=$CODACY_PROJECT_TOKEN -DapiToken=$CODACY_API_TOKEN
-    - mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=jacoco.xml -DprojectToken=$CODACY_PROJECT_TOKEN -DapiToken=$CODACY_API_TOKEN
+    - mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/jacoco/jacoco.xml -DprojectToken=$CODACY_PROJECT_TOKEN -DapiToken=$CODACY_API_TOKEN
+    - mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/jacoco/jacoco.exec -DprojectToken=$CODACY_PROJECT_TOKEN -DapiToken=$CODACY_API_TOKEN
