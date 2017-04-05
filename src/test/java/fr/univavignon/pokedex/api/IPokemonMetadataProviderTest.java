@@ -30,7 +30,7 @@ public class IPokemonMetadataProviderTest {
                         118,
                         118,
                         90));
-        when(pokemonMetadataProvider.getPokemonMetadata(200))
+        when(pokemonMetadataProvider.getPokemonMetadata(2000))
                 .thenThrow(new PokedexException("No pokemon at this index"));
     }
 
@@ -51,6 +51,6 @@ public class IPokemonMetadataProviderTest {
 
     @Test(expected = PokedexException.class)
     public void testGetPokemonMetadataError() throws PokedexException {
-        pokemonMetadataProvider.getPokemonMetadata(200);
+        pokemonMetadataProvider.getPokemonMetadata(2000);
     }
 }
