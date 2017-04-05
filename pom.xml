@@ -38,7 +38,8 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.9</version>
                 <configuration>
-                    <dataFile>target/jacoco.exec</dataFile>
+                    <dataFile>jacoco.exec</dataFile>
+                    <output>jacoco.xml</output>
                 </configuration>
             </plugin>
         </plugins>
