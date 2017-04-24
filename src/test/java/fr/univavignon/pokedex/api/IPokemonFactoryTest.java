@@ -1,5 +1,6 @@
 package fr.univavignon.pokedex.api;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,15 +28,15 @@ public class IPokemonFactoryTest {
         when(pokemonFactory.createPokemon(0, 613, 64, 4000, 4))
                 .thenReturn(new Pokemon(
                         0,
-                        "Bulbizarre",
-                        126,
-                        126,
+                        "Bulbasaur",
+                        118,
+                        118,
                         90,
                         613,
                         64,
                         4000,
                         4,
-                        56
+                        66
                 ));
     }
 
@@ -43,10 +44,10 @@ public class IPokemonFactoryTest {
     public void testCreatePokemon() {
         Pokemon pokemon = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
         assertNotNull(pokemon);
-        assertEquals("Bulbizarre", pokemon.getName());
-        assertEquals(126, pokemon.getAttack());
-        assertEquals(126, pokemon.getDefense());
+        assertEquals("Bulbasaur", pokemon.getName());
+        assertEquals(118, pokemon.getAttack());
+        assertEquals(118, pokemon.getDefense());
         assertEquals(90, pokemon.getStamina());
-        assertEquals(56.0, pokemon.getIv());
+        Assert.assertEquals(66.0, pokemon.getIv(), 1.0);
     }
 }
