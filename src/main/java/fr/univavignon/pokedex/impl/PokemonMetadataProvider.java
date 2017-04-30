@@ -61,24 +61,32 @@ public class PokemonMetadataProvider implements IPokemonMetadataProvider {
             e.printStackTrace();
         }
         try {
-            request = (HttpURLConnection) url.openConnection();
+            if (url != null) {
+                request = (HttpURLConnection) url.openConnection();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            request.connect();
+            if (request != null) {
+                request.connect();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Convert to a JSON object to print data
+        // Convert to a JSON object to get data
         JsonParser jp = new JsonParser(); //from gson
         JsonElement root = null;
         try {
-            root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+            if (request != null) {
+                root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        data = root.getAsJsonArray();
+        if (root != null) {
+            data = root.getAsJsonArray();
+        }
     }
 }
