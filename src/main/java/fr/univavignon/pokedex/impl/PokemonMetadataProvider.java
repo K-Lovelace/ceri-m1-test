@@ -61,16 +61,12 @@ public class PokemonMetadataProvider implements IPokemonMetadataProvider {
             e.printStackTrace();
         }
         try {
-            if (url != null) {
-                request = (HttpURLConnection) url.openConnection();
-            }
+            request = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            if (request != null) {
-                request.connect();
-            }
+            request.connect();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,14 +75,10 @@ public class PokemonMetadataProvider implements IPokemonMetadataProvider {
         JsonParser jp = new JsonParser(); //from gson
         JsonElement root = null;
         try {
-            if (request != null) {
-                root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            }
+            root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (root != null) {
-            data = root.getAsJsonArray();
-        }
+        data = root.getAsJsonArray();
     }
 }
