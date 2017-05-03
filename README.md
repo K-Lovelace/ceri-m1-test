@@ -7,3 +7,16 @@
 Gael Cuminal
 
 Alternant
+
+## Détails d'implémentation
+
+Pour réaliser ce TP, plusieurs choix ont été faits:
+
+Pour créer un pokémon, j'utilise un serveur d'un calculateur d'IVs en ligne.
+C'est le seul calculateur qui fait une partie du travail de calcul via une requête que j'ai pu trouver.
+J'ai dû interpréter le JSON retourné, et pour cela les résultats peuvent différer de cas réels.
+
+En ce qui concerne la sauvegarde du Pokédex, j'utilise l'interface Serializable. 
+J'ai donc légèrement modifié l'API pour que les classes Pokemon et PokemonMetadata implémentent cette interface.
+Un seul pokédex peut être stocké dans un fichier Pokedex.ser. 
+On pourrait améliorer le programme en donnant un ID unique à chaque Trainer pour pouvoir stocker plusieurs pokédexs à la fois.
